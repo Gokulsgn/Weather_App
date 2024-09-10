@@ -36,8 +36,8 @@ def display_weather(data):
 def main():
     # Set the page configuration including the favicon
     st.set_page_config(
-        page_title="Weather App", 
-        page_icon=r"C:\Users\gokul\Downloads\sunny_fAO_icon.ico",  # Replace with your actual favicon URL
+        page_title="Weather App",
+        page_icon="https://cdn2.iconfinder.com/data/icons/weather-filled-outline-3/64/weather02-1024.png",  # Replace with your actual favicon URL
         layout="centered"
     )
 
