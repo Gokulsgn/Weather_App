@@ -1,6 +1,7 @@
 import requests
 import streamlit as st
-from datetime import datetime  # Importing datetime module
+from datetime import datetime
+import pytz
 
 # Function to get weather data
 def get_weather_data(city, api_key):
@@ -16,9 +17,16 @@ def display_weather(data):
     weather_desc = data['weather'][0]['description']
     humidity = data['main']['humidity']
     wind_speed = data['wind']['speed']
-    
-    # Get current date and time in 12-hour format with AM/PM
-    current_time = datetime.now().strftime("%Y-%m-%d / %I:%M:%S %p")
+
+    # Get current UTC date and time
+    utc_now = datetime.utcnow()
+
+    # Convert UTC time to desired timezone (e.g., India Standard Time)
+    tz = pytz.timezone('Asia/Kolkata')  # Change to desired timezone
+    local_time = utc_now.replace(tzinfo=pytz.utc).astimezone(tz)
+
+    # Format time in 12-hour format with AM/PM
+    current_time = local_time.strftime("%Y-%m-%d / %I:%M:%S %p")
 
     # Use markdown with CSS for center alignment
     st.markdown(f"""
