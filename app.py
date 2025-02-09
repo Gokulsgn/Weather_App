@@ -2,6 +2,7 @@ import requests
 import streamlit as st
 from datetime import datetime
 import pytz
+import base64
 
 # Function to get weather data
 def get_weather_data(city, api_key):
@@ -30,7 +31,7 @@ def display_weather(data):
 
     # Use markdown with CSS for center alignment
     st.markdown(f"""
-    <div style='text-align: center;'>
+    <div style='text-align: center; color: white;'>
         <h2>Weather in {city}, {country}</h2>
         <p><strong>Date & Time:</strong> {current_time}</p>
         <p><strong>Temperature:</strong> {temp}°C</p>
@@ -39,6 +40,23 @@ def display_weather(data):
         <p><strong>Wind Speed:</strong> {wind_speed} m/s</p>
     </div>
     """, unsafe_allow_html=True)
+
+# Function to add background image using base64 encoding
+def add_bg_from_local(image_path):
+    with open(image_path, "rb") as image_file:
+        encoded_string = base64.b64encode(image_file.read()).decode()
+    
+    st.markdown(
+        f"""
+        <style>
+        .stApp {{
+            background-image: url("data:image/jpeg;base64,{encoded_string}");
+            background-size: cover;
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
 
 # Main function for the Streamlit app
 def main():
@@ -49,17 +67,25 @@ def main():
         layout="centered"
     )
 
+    # Add the background image (use the path to your image)
+    add_bg_from_local("C:/New folder/New folder/Silambarasan-TR-weight-loss-video.jpeg")
+
     # Add CSS for centering the title
     st.markdown("""
     <style>
     .title-center {
         text-align: center;
+        color: white;
     }
     </style>
     """, unsafe_allow_html=True)
 
     # Center the title
     st.markdown("<h1 class='title-center'>Weather App</h1>", unsafe_allow_html=True)
+    st.markdown("""
+<hr style="border:2px solid black">
+""", unsafe_allow_html=True)
+
 
     # Insert your API key here
     api_key = "eeeb5bb7f4c6efab91db7759a94a7b31"  # Replace with your actual API key
